@@ -17,23 +17,25 @@ authenticator = stauth.Authenticate(
     config['preauthorized']
 )
 
-
-authenticator.login()
-if st.session_state["authentication_status"]:
-    authenticator.logout()
+def main_vis():
     st.write(f'Welcome *{st.session_state["name"]}*')
     st.title('Some content')
     st.write("""
     # My first app
     Hello *world!*
+
+    hello there!
     """)
     df = pd.read_csv("my_data.csv")
     st.line_chart(df)
+
+authenticator.login()
+if st.session_state["authentication_status"]:
+    authenticator.logout()
+    main_vis()
 elif st.session_state["authentication_status"] is False:
     st.error('Username/password is incorrect')
 elif st.session_state["authentication_status"] is None:
     st.warning('Please enter your username and password')
-
-
 
 
