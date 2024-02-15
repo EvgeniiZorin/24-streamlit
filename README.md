@@ -28,3 +28,10 @@ This is filler text. Please replace this with explanatory text about further rel
 https://blog.streamlit.io/streamlit-app-starter-kit-how-to-build-apps-faster/ -->
 
 
+## Code
+
+Run locally by installing conda venv, then running:
+```powershell
+streamlit run main.py
+```
+
