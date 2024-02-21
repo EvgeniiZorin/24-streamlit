@@ -1,8 +1,18 @@
 import pandas as pd
+import seaborn as sns
+import plotly.express as px
 import streamlit as st
 import streamlit_authenticator as stauth
 import yaml #PyYAML
 from yaml.loader import SafeLoader
+
+sns.set_style('whitegrid', {
+    'axes.grid': False,
+    'axes.spines.left': False, 
+    'axes.spines.right': False,
+    'axes.spines.top': False,
+    'axes.spines.bottom': False
+    })
 
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
@@ -11,8 +21,17 @@ def read_dataset():
     df = pd.read_csv("my_data.csv")
     return df
 
+def load_datasets():
+    ### dataset 1
+    df1 = sns.load_dataset('healthexp')
+    df1['Country'] = df1['Country'].replace({'Great Britain':'United Kingdom'})
+    ### dataset 2
+    df2 = pd.read_csv('data/world-data-2023.csv')
+    df2['Country'] = df2['Country'].replace({'United States':'USA'})
+    return df1, df2
+
 def main_vis(username):
-    df = read_dataset()
+    df1, df2 = load_datasets()
     ### Sidebar
     st.sidebar.title(f"Welcome, {username}")
     st.sidebar.header('Dashboard `version 2`')
@@ -20,9 +39,9 @@ def main_vis(username):
     param_showDataset = st.sidebar.checkbox(label='Show dataset')
     # param_person = st.sidebar.selectbox(label='Person', 
     #                                     options=df['Person'].unique())
-    param_multiPerson = st.sidebar.multiselect(label='Person', 
-                                          options=df['Person'].unique(),
-                                          default=df['Person'].unique())
+    param_multiselect = st.sidebar.multiselect(label='Country', 
+                                               options=df1['Country'].unique(),
+                                               default=df1['Country'].unique())
     ### Main block
     st.write(f'Welcome *{st.session_state["name"]}*')
     st.title('Some content')
@@ -35,17 +54,42 @@ def main_vis(username):
     
     # Display dataset
     if param_showDataset:
-        st.write("Data:")
-        st.write(df)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.write('Dataset 1:')
+            st.write(df1)
+        with c2:
+            st.write('Dataset 2:')
+            st.write(df2)
     # ### Line chart with one person
     # df_slice1 = df[df['Person'] == param_person].reset_index()
     # st.line_chart(df_slice1, x='Period', y='Sales', color='Person')
-    ### Line chart with many people
-    st.write("You chose: ", ', '.join(param_multiPerson))
-    df_slice = df[df['Person'].isin(param_multiPerson)].reset_index()
-    print(df_slice)
-    st.line_chart(df_slice, x='Period', y='Sales', color='Person')
-    #
+    ###########################################################
+    ##### Line chart with life expectancy per country #########
+    ###########################################################
+    st.write("You chose: ", ', '.join(param_multiselect))
+    df1_lifeExp = df1[df1['Country'].isin(param_multiselect)].reset_index()
+    ### Streamlit
+    # st.line_chart(df1_lifeExp, x='Year', y='Life_Expectancy', color='Country')
+    ### Plotly
+    fig = px.line(df1_lifeExp, x="Year", y="Life_Expectancy", title='Life expectancy in the selected countries',color='Country', hover_data = {'Country':False, 'Year':False})
+    st.plotly_chart(fig, use_container_width=True)
+    ### Seaborn
+    # ab = sns.lineplot(
+    #     x=df1_lifeExp['Year'], y=df1_lifeExp['Life_Expectancy'],
+    #     hue=df1_lifeExp['Country']
+    # )
+    # st.pyplot(ab.get_figure())
+    ###########################################################
+    ##### Bar chart with population per country ###############
+    ###########################################################
+    df2_select = df2[df2['Country'].isin(param_multiselect)].reset_index()
+    fig = px.bar(
+        df2_select, x='Country', y='Population',
+        title = 'Population in the selected countries'
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    ### Some text here
     c1, c2 = st.columns(2)
     with c1:
         st.markdown("""
