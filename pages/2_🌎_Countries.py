@@ -6,6 +6,12 @@ import streamlit_authenticator as stauth
 import yaml #PyYAML
 from yaml.loader import SafeLoader
 
+st.set_page_config(
+    page_title='Multipage App',
+    page_icon='👋',
+    layout="wide"
+)
+
 def read_dataset():
     df = pd.read_csv("my_data.csv")
     return df
@@ -73,17 +79,40 @@ def countries(username):
     #     hue=df1_lifeExp['Country']
     # )
     # st.pyplot(ab.get_figure())
+    df2_select = df2[df2['Country'].isin(param_multiselect)].reset_index()
+    ###########################################################
+    ##### Pie chart - population ##############################
+    ###########################################################
+    df_pie = df2_select.copy(deep=True)
+    df_pie['Population'] = df_pie['Population'].str.replace(',', '').fillna(0).astype(int)
+    fig = px.pie(
+        df_pie, values='Population', names='Country',
+        title = 'Population of the selected countries'
+    )
+    # fig.update_layout(title_x=0.5)
+    st.plotly_chart(fig, use_container_width=True)
     ###########################################################
     ##### Bar chart with population per country ###############
     ###########################################################
-    df2_select = df2[df2['Country'].isin(param_multiselect)].reset_index()
-    fig = px.bar(
-        df2_select, x='Country', y='Population',
-        title = 'Population in the selected countries'
-    )
-    st.plotly_chart(fig, use_container_width=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        df2_select = df2[df2['Country'].isin(param_multiselect)].reset_index()
+        fig = px.bar(
+            df2_select, x='Country', y='Population',
+            title = 'Population in the selected countries'
+        )
+        st.plotly_chart(fig, use_container_width=True)
     ###
-    
+    with c2:
+        df2_select = df2[df2['Country'].isin(param_multiselect)].reset_index()
+        fig = px.scatter(
+            df2_select, 
+            x = 'Minimum wage', y = 'Life expectancy', 
+            color='Country',
+            title = 'Dependence of life expectancy on minimum wage'
+        )
+        fig.update_traces(marker_size=10)
+        st.plotly_chart(fig, use_container_width=True)
     ### Some text here
     c1, c2 = st.columns(2)
     with c1:

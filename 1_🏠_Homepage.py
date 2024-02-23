@@ -12,7 +12,8 @@ with open('config.yaml') as file:
 
 st.set_page_config(
     page_title='Multipage App',
-    page_icon='👋'
+    page_icon='👋',
+    layout="wide"
 )
 
 def homepage(username):
