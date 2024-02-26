@@ -6,6 +6,8 @@ import streamlit_authenticator as stauth
 import yaml #PyYAML
 from yaml.loader import SafeLoader
 
+from packages import utils
+
 st.set_page_config(
     page_title='Multipage App',
     page_icon='👋',
@@ -29,7 +31,6 @@ def countries(username):
     df1, df2 = load_datasets()
     ### Sidebar
     st.sidebar.write(f'*Welcome, {username}*')
-    authenticator.logout("Logout", 'sidebar')
     # st.sidebar.header('Dashboard `version 2`')
     st.sidebar.header('Parameters')
     param_showDataset = st.sidebar.checkbox(label='Show dataset')
@@ -131,19 +132,5 @@ def countries(username):
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
-authenticator = stauth.Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days'],
-    config['preauthorized']
-)
-
-name, authentication_status, username = authenticator.login()
-if authentication_status == False:
-    st.error('Username/password is incorrect')
-if authentication_status == None:
-    st.warning('Please enter your username and password')
-if authentication_status:
-    # authenticator.logout("Logout", 'sidebar')
-    countries(username)
+if utils.authorisation():
+    countries('jack jones!!!')
