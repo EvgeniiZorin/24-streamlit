@@ -1,4 +1,6 @@
 import streamlit as st
+import seaborn as sns
+import pandas as pd
 
 # State management -----------------------------------------------------------
 
@@ -40,33 +42,29 @@ def _reset_login_cb():
 
 # Function to check login credentials
 def login(username, password):
-    return username == "a" and password == "b"
+    return username == "jsmith" and password == "password"
 
 def main2():
     st.sidebar.button("Logout", on_click=_reset_login_cb)
     st.subheader("My Page")
     st.write("Hello")
 
-# Main function
+### Main function
 def authorisation():
-    st.title("My App")
+    st.title("Countries Dashboard")
     state = st.session_state
     init_state('login_successful', False)
     init_state('username', '')
     init_state('password', '')
-    # If login is successful, display "Hello"
+    ### If login is successful, display "Hello"
     if state.login_successful:
-        # st.button("Logout", on_click=_reset_login_cb)
-        # main2()
-        # print('Running function...')
-        # function1()
-        ###
-        st.sidebar.subheader("utils.py")
+        # st.sidebar.subheader("utils.py")
+        st.sidebar.write(f"*Welcome, {state.username}*")
         st.sidebar.button("Logout", on_click=_reset_login_cb)
         return True
     else:
         st.subheader("Login")
-        # Display login form
+        ### Display login form
         st.text_input(
             "Username:", value=state.username, key='username_input',
             on_change=_set_state_cb, kwargs={'username': 'username_input'}
@@ -75,17 +73,22 @@ def authorisation():
             "Password:", type="password", value=state.password, key='password_input',
             on_change=_set_state_cb, kwargs={'password': 'password_input'}
         )
-
         # st.write(state.username)
         # st.write(state.password)
-        
         # Check login credentials
         if not state.login_successful and st.button("Login", on_click=_set_login_cb, args=(state.username, state.password)):
             st.warning("Wrong username or password.")
 
+def load_datasets():
+    ### dataset 1
+    df1 = sns.load_dataset('healthexp')
+    df1['Country'] = df1['Country'].replace({'Great Britain':'United Kingdom'})
+    ### dataset 2
+    df2 = pd.read_csv('data/world-data-2023.csv', thousands=',')
+    df2['Country'] = df2['Country'].replace({'United States':'USA'})
+    return df1, df2
+
 if __name__ == "__main__":
-    # main()
-    # main( main2() )
     print('Running "utils.py" on its own.')
     if authorisation():
         main2()

@@ -10,6 +10,9 @@ Description of the app ...
 
 https://test-dashboard-1.streamlit.app/
 
+Username: `jsmith`
+Password: `password`
+
 # Section Heading
 
 This is filler text. Please replace this with the text for this section.
@@ -46,6 +49,12 @@ https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023?res
 
 
 # Notes (for development)
+
+## More data to explore
+
+Data on Fragile States Index: https://fragilestatesindex.org/global-data/
+
+
 
 ## Authentication
 
@@ -84,3 +93,43 @@ if authentication_status:
 ```
 
 Solved by rewriting the authentication as per https://discuss.streamlit.io/t/streamlit-login-solution-need-to-click-on-login-button-twice-to-login/57336/2. 
+
+## Extra code snippets
+
+Pie chart:
+
+```py
+df_pie = df2_select.copy(deep=True)
+fig = px.pie(
+    df_pie, values='Population', names='Country',
+    title = 'Population share'
+)
+fig.update_layout(
+    yaxis_title='',
+    title={
+        'text': "Population share",
+        'y':0.9,
+        'x':0.5,
+        'xanchor': 'center',
+        'yanchor': 'top'
+    },
+    xaxis_range=[0, a*1.4],
+    title_font_size = 30,
+    font_size = 20, # data callouts
+    yaxis_tickfont_size = 25,
+    xaxis_tickfont_size = 20,
+    xaxis_title_font_size = 25,
+    legend_font_size = 20
+)
+st.plotly_chart(fig, use_container_width=True)
+```
+
+Checkbox on the sidebar for showing dataset:
+
+```py
+param_showDataset = st.sidebar.checkbox(label='Show dataset')
+# Display dataset
+if param_showDataset:
+    st.write('Dataset:')
+    st.write(df2)
+```

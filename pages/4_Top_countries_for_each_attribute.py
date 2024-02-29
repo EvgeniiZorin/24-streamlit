@@ -20,8 +20,11 @@ st.set_page_config(
 
 def homepage(username):
     # st.sidebar.write(f'*Welcome, {username}*')
-    st.title('My Dashboard')
-    st.markdown('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a sapien id tellus vestibulum scelerisque vitae vitae mi. Donec rhoncus dignissim pulvinar. Aenean ut ex in lectus porta consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ipsum mauris, porta vel facilisis in, iaculis at orci. Sed vitae aliquam velit. Nulla ornare magna vel lacus congue lobortis. Duis id suscipit tortor.')
+    # st.title('My Dashboard')
+    st.markdown(f"""
+                    Some text here.
+                """)
+
 
 
 
