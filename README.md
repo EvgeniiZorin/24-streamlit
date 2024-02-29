@@ -20,9 +20,11 @@ This is filler text. Please replace this with the text for this section.
 # Further Reading
 
 This is filler text. Please replace this with explanatory text about further relevant resources for this repo.
-- Resource 1
-- Resource 2
-- Resource 3
+- https://datam.jrc.ec.europa.eu/datam/mashup/COUNTRY_DASHBOARDS/index.html
+- https://fragilestatesindex.org/country-data/
+- https://ourworldindata.org/grapher/life-expectancy-vs-health-expenditure?time=1996..2002&country=CHN~ISR~JPN~KOR~TUR
+- https://idea.usaid.gov/cd
+- https://sidd-021.shinyapps.io/global_country_analysis/
 
 <!-- some comments here -->
 
