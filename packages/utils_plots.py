@@ -42,3 +42,28 @@ def barplot_demographics(df2_select, variable, sort_by, sort_how):
         
     )
     return fig
+
+# def lineplot_historic_demographics_getStats(df, varY):
+
+
+def lineplot_historic_demographics(df, varY, YRSTART, YREND):
+    # COUNTRIES = ['Germany', 'Mexico', 'Russia', 'United States', 'Afghanistan']
+    # COUNTRIES = ['Russia', 'United States', 'Mexico']
+    # YRSTART, YREND = 1950, 2023
+    # VARIABLE = 'Life expectancy - Sex: all - Age: at birth - Variant: estimates'
+    print(varY, YRSTART, YREND)
+    df1_1_proc2 = df[ 
+            (df['Year'] > YRSTART) & 
+            (df['Year'] < YREND) 
+        ]
+    df1_1_proc2 = df1_1_proc2.groupby(["Country"]).apply(lambda x: x.sort_values(["Year"], ascending = True)).reset_index(drop=True)
+    fig = px.line(
+        # df1_lifeExp,
+        df1_1_proc2, 
+        x="Year", 
+        y=varY, 
+        # title='Life expectancy in the selected countries over the period of 1970 - 2020', 
+        color='Country', 
+        # hover_data = {'Country':False, 'Year':False}
+    )
+    return fig

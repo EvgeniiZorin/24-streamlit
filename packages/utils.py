@@ -80,13 +80,25 @@ def authorisation():
             st.warning("Wrong username or password.")
 
 def load_datasets():
-    ### dataset 1
-    df1 = sns.load_dataset('healthexp')
-    df1['Country'] = df1['Country'].replace({'Great Britain':'United Kingdom'})
+    ### dataset 1 - from seaborn
+    # df1 = sns.load_dataset('healthexp')
+    # df1['Country'] = df1['Country'].replace({'Great Britain':'United Kingdom'})
+    ### dataset 1 - a fuller version downloaded from online
+    df1 = pd.read_csv('data/life-expectancy-vs-health-expenditure.csv')
+    df1_proc = df1.assign(Continent=df1.groupby('Entity')['Continent'].ffill().bfill())
+    df1_proc['Entity'] = df1_proc['Entity'].replace({
+        'United States': 'USA'
+    })
+    df1_proc = df1_proc.rename(columns={
+        'Entity': 'Country',
+        'Population (historical estimates)': 'Population',
+        'Life expectancy - Sex: all - Age: at birth - Variant: estimates': 'Life Expectancy',
+        'Health expenditure per capita - Total': 'Health Expenditure'
+    })
     ### dataset 2
     df2 = pd.read_csv('data/world-data-2023.csv', thousands=',')
     df2['Country'] = df2['Country'].replace({'United States':'USA'})
-    return df1, df2
+    return df1_proc, df2
 
 if __name__ == "__main__":
     print('Running "utils.py" on its own.')

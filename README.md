@@ -135,3 +135,13 @@ if param_showDataset:
     st.write('Dataset:')
     st.write(df2)
 ```
+
+Upload seaborn:
+```py
+### Seaborn
+ab = sns.lineplot(
+    x=df1_lifeExp['Year'], y=df1_lifeExp['Life_Expectancy'],
+    hue=df1_lifeExp['Country']
+)
+st.pyplot(ab.get_figure())
+```
