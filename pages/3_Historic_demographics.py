@@ -23,6 +23,7 @@ def mainf():
         options=['Population', 'Life Expectancy', 'Health Expenditure'],
         index=0
     )
+    # st.write(df1.columns)
     df1 = df1.dropna(subset=param_analyseWhat)
     print(df1.columns)
     param_multiselect = st.sidebar.multiselect(label = 'Select countries:', 
