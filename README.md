@@ -37,7 +37,7 @@ https://blog.streamlit.io/streamlit-app-starter-kit-how-to-build-apps-faster/ --
 
 Run locally by installing conda venv, then running:
 ```powershell
-streamlit run main.py
+streamlit run 1_Homepage.py
 ```
 
 # Data

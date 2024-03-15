@@ -16,26 +16,26 @@ st.set_page_config(
 
 def countries(username):
     df1, df2 = utils.load_datasets()
-    ##############################################
-    ##### Sidebar ################################
-    ##############################################
-    st.sidebar.header('Parameters')
-    param_multiselect = st.sidebar.multiselect(
-        label='Select countries:', 
-        options=df2['Country'].unique(),
-        # default=df2['Country'].unique()
-        default=['Mexico', 'USA', 'Germany']
-    )
-    param_sortHow = st.sidebar.radio(
-        label='Sort all plots in the order:',
-        options=['Descending', 'Ascending']
-    )
-    param_sortBy = st.sidebar.radio(
-        label='Sort all plots by:', 
-        options=['Population', 'Land Area(Km2)', 'Density (P/Km2)', 'Birth Rate', "Each parameter's respective value"],
-        index=0
-    )
-    print(param_sortBy)
+    # ##############################################
+    # ##### Sidebar ################################
+    # ##############################################
+    # st.sidebar.header('Parameters')
+    # param_multiselect = st.sidebar.multiselect(
+    #     label='Select countries:', 
+    #     options=df2['Country'].unique(),
+    #     # default=df2['Country'].unique()
+    #     default=['Mexico', 'USA', 'Germany']
+    # )
+    # param_sortHow = st.sidebar.radio(
+    #     label='Sort all plots in the order:',
+    #     options=['Descending', 'Ascending']
+    # )
+    # param_sortBy = st.sidebar.radio(
+    #     label='Sort all plots by:', 
+    #     options=['Population', 'Land Area(Km2)', 'Density (P/Km2)', 'Birth Rate', "Each parameter's respective value"],
+    #     index=0
+    # )
+    # print(param_sortBy)
     ### Main block
     st.markdown("""
                 Here you will see bar plots for different statistics for 
@@ -44,9 +44,34 @@ def countries(username):
 
                 *Please choose countries on the sidebar on the left to show demographic statistics.*
                 """)
-    # ### Line chart with one person
-    # df_slice1 = df[df['Person'] == param_person].reset_index()
-    # st.line_chart(df_slice1, x='Period', y='Sales', color='Person')
+    ######################################################################################################################
+    ##### Parameters #####################################################################################################
+    ######################################################################################################################
+    st.markdown("""---""")
+    # st.header('Parameters')
+    c1, c2, c3 = st.columns(3, gap='large')
+    with c1:
+        param_multiselect = st.multiselect(
+            label='Select countries:', 
+            options=df2['Country'].unique(),
+            # default=df2['Country'].unique()
+            default=['Mexico', 'USA', 'Germany']
+        )
+    with c2:
+        param_sortHow = st.radio(
+            label='Sort all plots in the order:',
+            options=['Descending', 'Ascending'],
+            # horizontal=True
+        )
+    with c3:
+        param_sortBy = st.radio(
+            label='Sort all plots by:', 
+            options=['Population', 'Land Area(Km2)', 'Density (P/Km2)', 'Birth Rate', "Each parameter's respective value"],
+            index=0
+        )
+    print(param_sortBy)
+    st.markdown("""---""")
+    ######################################################################################################################
     df2_select = df2[df2['Country'].isin(param_multiselect)].reset_index()
     c1, c2 = st.columns(2)
     with c1:
