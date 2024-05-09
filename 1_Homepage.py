@@ -22,13 +22,15 @@ def homepage(username):
     # st.sidebar.write(f'*Welcome, {username}*')
     # st.title('My Dashboard')
     df1, df2 = utils.load_datasets()
+    st.title('Homepage')
     st.markdown(f"""
                 Welcome to the World Countries Data Analysis Dashboard! 
+                
                 This website aims at showing interesting statistics for different countries around the world 
                 and highlight differences between countries based on different comparators. 
-
+                
                 *Please click the tabs on the sidebar on the left to see visualisations
-                for different categories of information*.
+                for different categories*.
                 """)
     st.image(
         'data/map of the world 4.png', 

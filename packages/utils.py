@@ -51,7 +51,6 @@ def main2():
 
 ### Main function
 def authorisation():
-    st.title("Countries Dashboard")
     state = st.session_state
     init_state('login_successful', False)
     init_state('username', '')
@@ -59,11 +58,23 @@ def authorisation():
     ### If login is successful, display "Hello"
     if state.login_successful:
         # st.sidebar.subheader("utils.py")
+        # st.sidebar.
         st.sidebar.write(f"*Welcome, {state.username}*")
         st.sidebar.button("Logout", on_click=_reset_login_cb)
         return True
     else:
+        st.title("Countries Dashboard")
         st.subheader("Login")
+        st.info(
+            """The login page for this dashboard is for illustrative purposes only. Please use the credentials below:
+
+Username:  `jsmith`
+
+Password:  ```password```
+            """, 
+            icon="ℹ️"
+        )
+
         ### Display login form
         st.text_input(
             "Username:", value=state.username, key='username_input',

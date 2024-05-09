@@ -16,39 +16,19 @@ st.set_page_config(
 
 def countries(username):
     df1, df2 = utils.load_datasets()
-    # ##############################################
-    # ##### Sidebar ################################
-    # ##############################################
-    # st.sidebar.header('Parameters')
-    # param_multiselect = st.sidebar.multiselect(
-    #     label='Select countries:', 
-    #     options=df2['Country'].unique(),
-    #     # default=df2['Country'].unique()
-    #     default=['Mexico', 'USA', 'Germany']
-    # )
-    # param_sortHow = st.sidebar.radio(
-    #     label='Sort all plots in the order:',
-    #     options=['Descending', 'Ascending']
-    # )
-    # param_sortBy = st.sidebar.radio(
-    #     label='Sort all plots by:', 
-    #     options=['Population', 'Land Area(Km2)', 'Density (P/Km2)', 'Birth Rate', "Each parameter's respective value"],
-    #     index=0
-    # )
-    # print(param_sortBy)
     ### Main block
+    st.title('General demographics')
     st.markdown("""
                 Here you will see bar plots for different statistics for 
-                selected countries. On all barplots, countries are sorted 
-                by population in descending order. 
+                selected countries. By default, in all plots 
+                the countries are sorted by population in descending order. 
 
-                *Please choose countries on the sidebar on the left to show demographic statistics.*
+                *You can change the parameters below to compare different countries.*
                 """)
     ######################################################################################################################
     ##### Parameters #####################################################################################################
     ######################################################################################################################
     st.markdown("""---""")
-    # st.header('Parameters')
     c1, c2, c3 = st.columns(3, gap='large')
     with c1:
         param_multiselect = st.multiselect(

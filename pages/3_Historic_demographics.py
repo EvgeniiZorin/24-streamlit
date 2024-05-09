@@ -33,11 +33,14 @@ def mainf():
     #                                             default = ['Mexico', 'USA']
     #                                            )
     # #
-
+    st.title('Historic demographics')
     st.markdown("""
-                Lorem ipsum dolor sit amet, **consectetur** adipiscing elit. Curabitur a sapien id tellus vestibulum scelerisque vitae vitae mi. Donec rhoncus dignissim pulvinar. Aenean ut ex in lectus porta consectetur. 
-                
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ipsum mauris, porta vel facilisis in, iaculis at orci. Sed vitae aliquam velit. Nulla ornare magna vel lacus congue lobortis. Duis id suscipit tortor."""
+                This page shows statistics on population 
+                during the specified range of years. 
+
+                The range of years is given as per the years available
+                in the dataset.
+                """
                 )
     ######################################################################################################################
     ##### Parameters #####################################################################################################
