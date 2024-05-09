@@ -48,7 +48,8 @@ def homepage(username):
     )
     st.plotly_chart(fig, use_container_width=True)
     ### barplot top 10 lowest
-    lowest10 = df2.nsmallest(howManyCountries, choice).sort_values(by='Density (P/Km2)', ascending=True)
+    # lowest10 = df2.nsmallest(howManyCountries, choice).sort_values(by='Density (P/Km2)', ascending=True)
+    lowest10 = df2.nsmallest(howManyCountries, choice).sort_values(by=choice, ascending=True)
     print(lowest10)
     fig = px.bar(
         lowest10, 
